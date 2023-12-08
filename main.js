@@ -10,10 +10,10 @@ const emptySequence = [
 ];
 
 const exampleSequence = [
-  "sketches/day1",
-  "sketches/day2",
-  "sketches/day3",
-  "sketches/day4",
+  "sketches/teo-day1",
+  "sketches/teo-day2",
+  "sketches/teo-day3",
+  "sketches/teo-day4",
   
 ];
 

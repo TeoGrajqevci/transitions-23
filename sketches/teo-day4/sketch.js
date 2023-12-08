@@ -53,13 +53,16 @@ let tap
 let squeak
 let water;
 let boing
+let gear;
 
 window.preload = function () {
-    img = loadImage('tap.svg')
+    
+    img = loadImage('tap.png')
     tap = loadSound('tap.mp3')
     squeak = loadSound('squeak.mp3')
     water = loadSound('water.mp3')
     boing = loadSound('boing.mp3')
+    gear = loadSound('gear.mp3')
 }
 
 window.setup = function (){
@@ -133,13 +136,20 @@ window.draw = function () {
             line(centerX - objSize / 2, centerY, centerX + objSize / 2, centerY)
             line(centerX, centerY - objSize / 2, centerX, centerY + objSize / 2)
 
+          
+
             window.mouseClicked = function () {
+             
+            
                 if  (mouseX > 0 && mouseX < 100 && mouseY > height/6-26 && mouseY < height/6+24) {
                     robinet = true;
                     tap.play()
-                    tap.setVolume(1.5)
+                    tap.setVolume(3)
+                   
+                   
                 }
             }
+         
           
             if (robinet) {
                 spring.target = width/2.4
@@ -148,8 +158,11 @@ window.draw = function () {
                 spring.target = 0
             }
 
+            if (mouseButton === LEFT) {
+              
             spring4.target = 100
-           
+            }
+
 
             spring.step(deltaTime / 1000) 
             spring4.step(deltaTime / 1000)
@@ -161,7 +174,9 @@ window.draw = function () {
             translate(-100+b,0)
             line(-100, height/6, x+20 , height/6)
 
-            image(img, x+20, height/6-26, 100, 100);
+            imageMode(CENTER)
+           
+            image(img, x+58, height/6-26+20,183/2.4,119/2.4);
 
             const tolerance = 0.001; // Adjust the tolerance as needed
 
@@ -172,8 +187,7 @@ window.draw = function () {
 
         case 1:
             strokeWeight(12)
-            line(0, height/6, width/2.4+20 , height/6)
-            image(img, width/2.4+20, height/6-26, 100, 100);
+         
 
             Matter.Engine.update(engine);
 
@@ -211,7 +225,8 @@ window.draw = function () {
             // Display static boundaries
             boundary1.show();
             boundary2.show();
-
+            line(0, height/6, width/2.4+20 , height/6)
+            image(img, width/2.4+58, height/6-26+20,183/2.4,119/2.4);
 
 
             break;
@@ -243,7 +258,7 @@ window.draw = function () {
 
         strokeWeight(12)
         line(0, height/6, width/2.4+20-y , height/6)
-        image(img, width/2.4+20-y, height/6-26, 100, 100);
+        image(img, width/2.4+58-y, height/6-26+20, 183/2.4,119/2.4);
 
       if (y > 746) {
         shapeId++;
@@ -296,7 +311,7 @@ window.draw = function () {
         strokeWeight(12)
         translate(intStart-a*4,0)
         line(0, height/6, 20 , height/6)
-        image(img, 20, height/6-26, 100, 100);
+        image(img, 58, height/6-26+20, 183/2.4,119/2.4);
         
 
         break;
