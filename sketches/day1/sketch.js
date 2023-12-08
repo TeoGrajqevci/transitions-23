@@ -1,4 +1,5 @@
 import { SpringNumber } from "../../shared/spring.js"
+import { sendSequenceNextSignal } from "../../shared/sequenceRunner.js"
 
 const spring = new SpringNumber({
    
@@ -90,9 +91,7 @@ window.windowResized = function () {
     resizeCanvas(windowWidth, windowHeight);
 }
 
-window.mouseClicked = function () {
-   
-}
+
 
 window.mousePressed = function () {
   for (let i = 0; i < rectVertices.length; i++) {
@@ -194,7 +193,12 @@ const sizeSpring = Sspring.position
             rect(centerX, centerY, objSize+sizeSpring, objSize+sizeSpring,roundness,roundness2,roundness3,roundness4);
     
 
-    
+            if(roundness >= 300 && roundness2 >= 300 && roundness3 >= 300 && roundness4 >= 300){
+setTimeout(function () {
+    sendSequenceNextSignal()
+}, 1000);
+
+            }
    
    
   

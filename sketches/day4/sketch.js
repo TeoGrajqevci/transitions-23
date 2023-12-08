@@ -1,4 +1,5 @@
 import { SpringNumber } from "../../shared/spring.js"
+import { sendSequenceNextSignal } from "../../shared/sequenceRunner.js"
 
 const spring = new SpringNumber({
 	position: 0, // start position
@@ -32,7 +33,7 @@ const spring4 = new SpringNumber({
 
 let engine;
 let world;
-let renderOptions
+
 let balls = [];
 let boundary1;
 let boundary2;
@@ -263,26 +264,29 @@ window.draw = function () {
         window.mouseClicked = function () {
             spring2.target = objSize-20
             spring3.target = 30
-            
-        }
-
-        window.mousePressed = function () { 
             boing.play()
-
+            boing.setVolume(1.5)
         }
+
+      
 
         spring2.step(deltaTime / 1000)
         spring3.step(deltaTime / 1000)
 
         const z = spring2.position
         const a = spring3.position
+        let roundness = abs(30-a)
      
         stroke(0)
         noStroke()
-        rect(centerX, centerY, 20+z, objSize+20, abs(30-a));
+        rect(centerX, centerY, 20+z, objSize, roundness);
 
     
-    
+    if (roundness < 1) {
+        setTimeout(function () {
+            sendSequenceNextSignal()
+        }, 1000);
+        }
 
         
 
@@ -375,7 +379,7 @@ class Boundary {
         rect(0, 0, this.w, this.h, 30);
         pop();
 
-        if (Math.abs(this.body.angle) <= 0.01) {
+        if (Math.abs(this.body.angle) < 0.05) {
             flow = false;
             let allBallsOffScreen = true;
             for (let i = 0; i < balls.length; i++) {

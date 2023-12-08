@@ -1,6 +1,7 @@
 import { SpringNumber, SpringVector } from "../../shared/spring.js"
 import { VerletPhysics } from "../../shared/verletPhysics.js"
 import { DragManager } from "../../shared/dragManager.js"
+import { sendSequenceNextSignal } from "../../shared/sequenceRunner.js"
 
 const dragManager = new DragManager()
 
@@ -43,7 +44,7 @@ class Circle {
         if (this.attracted) {
             const attractionPointX = mouseX;
             const attractionPointY = mouseY;
-            const attractionForce = 0.015;
+            const attractionForce = 0.025;
 
             this.x += (attractionPointX - this.x) * attractionForce;
             this.y += (attractionPointY - this.y) * attractionForce;
@@ -326,7 +327,7 @@ window.draw = function () {
        shapeId++
     }
 
-    let attractionDistance = 100;
+    let attractionDistance = 150;
 
 
     circles.forEach((circle) => {
@@ -566,7 +567,9 @@ shapeId++
     line(centerX - objSize / 2, centerY, centerX + objSize / 2, centerY)
     line(centerX, centerY - objSize / 2, centerX, centerY + objSize / 2)
 
-    
+setTimeout(function () {
+    sendSequenceNextSignal()
+}, 2000);
   
 
     break;

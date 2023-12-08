@@ -1,4 +1,5 @@
 import { SpringNumber } from "../../shared/spring.js"
+import { sendSequenceNextSignal } from "../../shared/sequenceRunner.js"
 
 
 
@@ -26,6 +27,7 @@ let osc;
 
 let mouseClicked = false    
 let shapeId = 0
+let change = false
 
 const positions = []; 
 const circles = []; 
@@ -90,6 +92,47 @@ window.draw = function () {
 
 
     switch (shapeId) {
+        case 0:
+          
+           
+
+         
+                if (mouseIsPressed) {
+                    spring.target = 20;
+                   
+                } else {
+                    spring.target = objSize;
+                   
+                }
+             
+                spring.step(deltaTime / 1000);
+
+                const x = spring.position;
+              
+               
+
+                fill(0);
+                noStroke();
+                circle(centerX, centerY, x);
+
+
+
+if (x >= 19.5 && x <= 20.5) {
+   
+    shapeId++
+}
+
+
+
+
+
+
+    fill(0)
+    noStroke()
+    circle(centerX, centerY, x);
+           
+            break;
+
         case 1:
 
 
@@ -136,6 +179,11 @@ window.draw = function () {
                     circle(x, y, pointSize);
                     circles.push(new Circle(x, y, pointSize));
                     positions.splice(i, 1);
+
+                    if (positions.length == 1) {
+                     change = true
+                    }
+                      
                     
                     pop.setVolume(0.5)
                     pop.play()
@@ -158,46 +206,21 @@ window.draw = function () {
     }
 
   
+   
+    
+    console.log(positions.length)
+
+    if (change) {
+        setTimeout(function () {
+            sendSequenceNextSignal()
+        }, 1000);
+    }
+  
             break;
 
-        case 0:
-          
-           
+            
 
-         
-                if (mouseIsPressed) {
-                    spring.target = 20;
-                   
-                } else {
-                    spring.target = objSize;
-                   
-                }
-             
-                spring.step(deltaTime / 1000);
-
-                const x = spring.position;
-              
-               
-
-                fill(0);
-                noStroke();
-                circle(centerX, centerY, x);
-
-
-
-if (x >= 19.5 && x <= 20.5) {
-    osc.stop();
-    shapeId = 1;
-}
-
-
-
-
-    fill(0)
-    noStroke()
-    circle(centerX, centerY, x);
-           
-            break;
+        
 }
 
         
