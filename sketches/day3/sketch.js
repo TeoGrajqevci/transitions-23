@@ -72,9 +72,16 @@ const originalPositions2 = [];
 const originalPositions3 = [];
 const originalPositions4 = [];
 
+let cling;
+let grab;
+let ding;
 
 
-
+window.preload = function () {
+    cling = loadSound('cling.mp3')
+    grab = loadSound('grab.mp3')
+    ding = loadSound('ding.mp3')
+}
 
 
 window.setup = function () {
@@ -299,30 +306,46 @@ window.draw = function () {
 
        
         circles[12].color = color(255)
+
+
+//if a circle goes outside the screen, cling sound plays
+    
+
       
      
 
 
         if (circle.x >= 0 && circle.x <= width && circle.y >= 0 && circle.y <= height) {
+           
             allCirclesOutside = false;
         }
     });
 
     if (allCirclesOutside) {
+        cling.play()
        shapeId++
     }
 
     let attractionDistance = 100;
 
+
     circles.forEach((circle) => {
         const distance = dist(circle.originalX, circle.originalY, mouseX, mouseY);
         const distance2 = dist(circle.x, circle.y, circle.originalX, circle.originalY);
         if (distance < attractionDistance && distance2 < attractionDistance) {
+           
+          
+           
             circle.attracted = true;
         } else {
             circle.attracted = false;
         }
     });
+
+
+
+  
+
 
     circle(centerX, centerY, 20)
 
@@ -366,10 +389,18 @@ window.draw = function () {
 
     if (mouseIsPressed) {
         spring.target = mouseX- centerX;
+      
     } 
+
+    window.mousePressed = function() {
+
+        grab.play()
+    
+    }
 
     window.mouseReleased = function() {
         spring.target = objSize / 2;
+        ding.play()
     }
 
    

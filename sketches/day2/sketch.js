@@ -20,6 +20,7 @@ const spring3 = new SpringNumber({
     halfLife: 0.15 // time until amplitude is halved
 })
 
+let osc;
 
 
 
@@ -29,10 +30,18 @@ let shapeId = 0
 const positions = []; 
 const circles = []; 
 
+let pop;
+
+window.preload = function () {
+    pop = loadSound('popping.mp3')
+}
 
 window.setup = function () {
 
     createCanvas(windowWidth, windowHeight);
+
+    osc = new p5.Oscillator();
+    osc.setType('sine');
 
     angleMode(DEGREES)
     const gridCount = 5
@@ -60,6 +69,7 @@ window.windowResized = function () {
 
 window.mouseClicked = function () {
     mouseClicked = true
+    
  
 }
 
@@ -126,6 +136,11 @@ window.draw = function () {
                     circle(x, y, pointSize);
                     circles.push(new Circle(x, y, pointSize));
                     positions.splice(i, 1);
+                    
+                    pop.setVolume(0.5)
+                    pop.play()
+                   
+                   
                    
                
                 }
@@ -146,20 +161,32 @@ window.draw = function () {
             break;
 
         case 0:
+          
+           
 
-    if (mouseIsPressed) {
-        spring.target = 20
-        
-    } else {
-        spring.target = objSize
-    }
+         
+                if (mouseIsPressed) {
+                    spring.target = 20;
+                   
+                } else {
+                    spring.target = objSize;
+                   
+                }
+             
+                spring.step(deltaTime / 1000);
+
+                const x = spring.position;
+              
+               
+
+                fill(0);
+                noStroke();
+                circle(centerX, centerY, x);
 
 
-    spring.step(deltaTime / 1000) 
-
-const x = spring.position
 
 if (x >= 19.5 && x <= 20.5) {
+    osc.stop();
     shapeId = 1;
 }
 

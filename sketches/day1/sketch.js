@@ -34,7 +34,7 @@ const Sspring = new SpringNumber({
 })
 
 
-let roundness = 1;
+let roundness = 0;
 let roundness2 = 0;
 let roundness3 = 0;
 let roundness4 = 0;
@@ -49,6 +49,13 @@ let originalPositions = [];
 let selectedVertex = -1;
 let resetTimeout = null;
 
+let pop;
+let woosh
+
+window.preload = function () {
+    pop = loadSound('click.mp3')
+    woosh = loadSound('woosh.mp3')
+}
 
 window.setup = function () {
 
@@ -91,14 +98,18 @@ window.mousePressed = function () {
   for (let i = 0; i < rectVertices.length; i++) {
       let d = dist(mouseX, mouseY, rectVertices[i].x, rectVertices[i].y);
       if (d < 150) {
+        pop.play()
         selectedVertex = i;
     }
   }
+  
 }
 
 window.mouseReleased = function () {
   isSquared = !isSquared;
  
+  woosh.play()
+
   if (selectedVertex !== -1) {
 
       // Reset the selected vertex to a position 100 pixels towards the center

@@ -48,8 +48,17 @@ let intStart = 0
 
 let bodyRotations = [];
 
+let tap
+let squeak
+let water;
+let boing
+
 window.preload = function () {
     img = loadImage('tap.svg')
+    tap = loadSound('tap.mp3')
+    squeak = loadSound('squeak.mp3')
+    water = loadSound('water.mp3')
+    boing = loadSound('boing.mp3')
 }
 
 window.setup = function (){
@@ -126,11 +135,14 @@ window.draw = function () {
             window.mouseClicked = function () {
                 if  (mouseX > 0 && mouseX < 100 && mouseY > height/6-26 && mouseY < height/6+24) {
                     robinet = true;
+                    tap.play()
+                    tap.setVolume(1.5)
                 }
             }
           
             if (robinet) {
                 spring.target = width/2.4
+         
             } else {
                 spring.target = 0
             }
@@ -167,6 +179,8 @@ window.draw = function () {
             window.mouseClicked = function () {
                 if  (mouseX > width/2.4+20 && mouseX < width/2.4+120 && mouseY > height/6-26 && mouseY < height/6+24) {
                     flow = true;
+                    squeak.play()
+                    water.play()
                 }
             }
 
@@ -174,6 +188,11 @@ window.draw = function () {
                 // Limit the rate of ball creation
                 let ball = new Ball(width/2.14-3, 193, 5);
                 balls.push(ball);
+            }
+
+            if (!flow) {
+               water.stop()
+               
             }
 
             // Display and check boundaries for each ball
@@ -197,7 +216,7 @@ window.draw = function () {
             break;
 
         case 2:
-
+           
         fill(0)
         noStroke()
         rectMode(CENTER)
@@ -210,6 +229,7 @@ window.draw = function () {
       
         if (!flow) {
             spring1.target = width/2.4
+             
         } else {
             spring1.target = 0
         }
@@ -244,6 +264,11 @@ window.draw = function () {
             spring2.target = objSize-20
             spring3.target = 30
             
+        }
+
+        window.mousePressed = function () { 
+            boing.play()
+
         }
 
         spring2.step(deltaTime / 1000)
@@ -288,7 +313,7 @@ class Ball {
         push();
         translate(pos.x, pos.y);
         rotate(angle);
-        fill(0);
+        fill(119,181,254);
         noStroke();
         ellipse(0, 0, this.radius *3 );
         pop();
