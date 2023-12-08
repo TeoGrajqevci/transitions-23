@@ -178,7 +178,7 @@ window.draw = function () {
             Matter.Engine.update(engine);
 
             window.mouseClicked = function () {
-                if  (mouseX > width/2.4+20 && mouseX < width/2.4+120 && mouseY > height/6-26 && mouseY < height/6+24) {
+                if  (mouseX > width/2.4+40 && mouseX < width/2.4+160 && mouseY > height/6-46 && mouseY < height/6+44) {
                     flow = true;
                     squeak.play()
                     water.play()

@@ -91,6 +91,15 @@ window.draw = function () {
     const strokeW = 20
 
 
+    if (positions.length == 0) {
+        change = true
+       }
+    if (change) {
+        noLoop();
+        setTimeout(function () {
+            sendSequenceNextSignal()
+        }, 1000);
+    }
     switch (shapeId) {
         case 0:
           
@@ -180,9 +189,6 @@ if (x >= 19.5 && x <= 20.5) {
                     circles.push(new Circle(x, y, pointSize));
                     positions.splice(i, 1);
 
-                    if (positions.length == 1) {
-                     change = true
-                    }
                       
                     
                     pop.setVolume(0.5)
@@ -210,11 +216,6 @@ if (x >= 19.5 && x <= 20.5) {
     
     console.log(positions.length)
 
-    if (change) {
-        setTimeout(function () {
-            sendSequenceNextSignal()
-        }, 1000);
-    }
   
             break;
 

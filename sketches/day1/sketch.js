@@ -69,13 +69,13 @@ window.setup = function () {
 
 
     rectVertices.push(createVector(centerX - objSize  / 2, centerY - objSize  / 2));
-    rectVertices.push(createVector(centerX , centerY - objSize  / 2+10));
+   
     rectVertices.push(createVector(centerX + objSize  / 2, centerY - objSize/2));
-    rectVertices.push(createVector(centerX + objSize  / 2 - 10, centerY));
+ 
     rectVertices.push(createVector(centerX + objSize  / 2, centerY + objSize  / 2));
-    rectVertices.push(createVector(centerX , centerY + objSize  / 2 - 10));
+
     rectVertices.push(createVector(centerX - objSize  / 2, centerY + objSize  / 2));
-    rectVertices.push(createVector(centerX - objSize  / 2 +10, centerY));
+
 
 
     for (let i = 0; i < rectVertices.length; i++) {
@@ -194,6 +194,7 @@ const sizeSpring = Sspring.position
     
 
             if(roundness >= 300 && roundness2 >= 300 && roundness3 >= 300 && roundness4 >= 300){
+              noLoop();
 setTimeout(function () {
     sendSequenceNextSignal()
 }, 1000);
